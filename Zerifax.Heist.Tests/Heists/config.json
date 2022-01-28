@@ -1,0 +1,30 @@
+{
+  "Cooldown": 1,
+  "MinPoints": 2,
+  "MaxPoints": 3,
+  "MessageWait": 4,
+  "MinUsers": 5,
+  "PrepTime": 6,
+
+  "PointsVariable": "points",
+  "PointsNameVariable": "pointsName",
+  "CooldownMessage": "cooldown",
+  "ReadyMessage": "ready",
+  "CreateTeamMessage": "createTeam",
+  "UserEntryMessage": "userEntry",
+  "NotEnoughUsersMessage": "notEnoughUsers",
+   
+
+  "Events": [{
+    "SuccessChance": 50,
+    "PointsMultiplier": 1,
+    "EventChance": 0,
+
+    "StartMessage": "start",
+    "SuccessMessage": "success",
+    "PartialSuccessMessage": "partial",
+    "FailMessage": "failure"
+
+
+  }]
+}

@@ -1,7 +1,7 @@
 ﻿using Zerifax.Actions;
 
 
-namespace Zerifax.Actions.Continue
+namespace Zerifax.Actions.Clear
 {
     using Zerifax;
     using Zerifax.Heist;
@@ -32,7 +32,8 @@ namespace Zerifax.Actions.Continue
         public bool Execute()
         {
 
-            return Runner.ContinueHeist(args["user"].ToString(), args["rawInput"].ToString());
+            Runner.ClearHeist();
+            return true;
         }
     }
 }

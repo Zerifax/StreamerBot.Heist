@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Heists\advanced.json">
+      <None Update="Heists\userchoice.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Heists\basic.json">
@@ -28,10 +28,9 @@
       <None Update="Heists\reward.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Heists\LoadingTests" />
+      <None Update="Heists\config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

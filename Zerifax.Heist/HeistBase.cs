@@ -116,12 +116,12 @@ namespace Zerifax.Heist
 
         protected void AddPoints(string user, int points)
         {
-            _pointsManager.AddPoints(user, _configuration.PointsVariable, points);
+            _pointsManager.AddPoints(user, Configuration.PointsVariable, points);
         }
 
         protected int GetPoints(string user)
         {
-            return _pointsManager.GetPoints(user, _configuration.PointsVariable);
+            return _pointsManager.GetPoints(user, Configuration.PointsVariable);
         }
 
         protected Event CurrentEvent

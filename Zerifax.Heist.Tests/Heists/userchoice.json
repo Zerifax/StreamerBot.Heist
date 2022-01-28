@@ -1,0 +1,52 @@
+{
+  "Cooldown": 1,
+  "PrepTime": 1,
+  "MinUsers": 1,
+  "CreateTeamMessage": "[user] is putting a team together for the heist. Type !heist and a wager amount to join",
+  "UserEntryMessage": "[user] has entered the heist with [points] [pointsName]",
+  "NotEnoughUsersMessage": "Not enough people were interested in the heist.",
+  "CooldownMessage": "The team needs more time for recovery before setting off on another heist",
+  "ReadyMessage": "It's time to put a team together for a heist. Type !heist <amount> to join.",
+  "MinPoints": 1,
+  "MaxPoints": 100,
+  "PointsNameVariable": "pointsname",
+  "PointsVariable": "points",
+
+  "Events": [{
+    "SuccessChance": 60,
+    "PointsMultiplier": 1.5,
+    "EventChance": 50,
+
+    "StartMessage": "The heist is ready to begin. The team prepares and sets out.",
+    "SuccessMessage": "The entire team succeeded.",
+    "PartialSuccessMessage": "Some of the team made it back.",
+    "FailMessage": "Nobody succeeded.",
+
+    "Events": [{
+      "StartMessage": "Something has happened on the journey.",
+      "FailMessage": "Nobody did anything and the heist failed.",
+      "Events": [
+        {
+          "SuccessChance": 50,
+          "PointsMultiplier": 1.8,
+          "Command": "A",
+          "Description": "option 1",
+          "StartMessage": "user tries option 1.",
+          "SuccessMessage": "Option 1 succeeds.",
+          "PartialSuccessMessage": "Option 1 kinda works.",
+          "FailMessage": "Option 1 fails."
+        },
+        {
+          "SuccessChance": 75,
+          "PointsMultiplier": 1.25,
+          "Command": "B",
+          "Description": "option 2",
+          "StartMessage": "user tries option 2.",
+          "SuccessMessage": "Option 2 succeeds.",
+          "PartialSuccessMessage": "Option 2 kinda works.",
+          "FailMessage": "Option 2 fails."
+        }
+      ]
+    }]
+  }]
+}

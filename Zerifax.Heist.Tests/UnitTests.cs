@@ -21,12 +21,14 @@ namespace Zerifax.Heist.Tests
         [Test]
         public void ConfigurationLoadsSuccessfully()
         {
+            _cph.SetVariable(HeistConfiguration.VAR_ConfigFile, $"Heists\\config.json");
+            
             var builder = new HeistRunner(_cph, null);
             var config = builder.Configuration;
             
             Assert.AreEqual(1, config.Cooldown);
-            Assert.AreEqual(2, config.MaxPoints);
-            Assert.AreEqual(3, config.MinPoints);
+            Assert.AreEqual(2, config.MinPoints);
+            Assert.AreEqual(3, config.MaxPoints);
             Assert.AreEqual(4, config.MessageWait);
             Assert.AreEqual(5, config.MinUsers);
             Assert.AreEqual(6, config.PrepTime);
@@ -217,26 +219,52 @@ namespace Zerifax.Heist.Tests
             Assert.AreEqual(200, _cph.GetUserVariable<int>(User1,runner.Configuration.PointsVariable));
         }
         
+        [Test]
+        public void UserChoiceEventCanTrigger()
+        {
+            _cph.SetVariable(HeistConfiguration.VAR_ConfigFile, $"Heists\\userchoice.json");
+            
+            var runner = new HeistRunner(_cph, new PointManager(_cph));
+            _cph.SetVariable(HeistConfiguration.VAR_STATUS, (int)HeistStatus.Preparing);
+            _cph.SetVariable(HeistConfiguration.VAR_TIME, DateTime.Now.Subtract(TimeSpan.FromSeconds(10)));
+
+            _cph.SetVariable(HeistConfiguration.VAR_USERS, new Dictionary<string, int>() {{User1, 1}});
+            _cph.SetNextRoll(0, 0, 0); // event 0, force subevent roll, subevent 0
+
+            runner.RunHeist();
+            
+            Assert.AreEqual(runner.Configuration.Events[0].StartMessage, _cph.Messages[0]);
+            Assert.AreEqual(runner.Configuration.Events[0].Events[0].StartMessage, _cph.Messages[1]);
+            Assert.AreEqual((int)HeistStatus.InProgress, _cph.GetVariable<int>(HeistConfiguration.VAR_STATUS));
+            Assert.AreEqual(new List<int>{0,0}, _cph.GetVariable<List<int>>(HeistConfiguration.VAR_EVENTTREE));
+        }
+
+        [Test]
+        public void UserChoiceCanSucceed()
+        {
+            _cph.SetVariable(HeistConfiguration.VAR_ConfigFile, $"Heists\\userchoice.json");
+            
+            var runner = new HeistRunner(_cph, new PointManager(_cph));
+            _cph.SetVariable(HeistConfiguration.VAR_STATUS, (int)HeistStatus.InProgress);
+            _cph.SetVariable(HeistConfiguration.VAR_TIME, DateTime.Now.Subtract(TimeSpan.FromSeconds(10)));
+
+            _cph.SetVariable(HeistConfiguration.VAR_USERS, new Dictionary<string, int>() {{User1, 100}});
+            _cph.SetVariable(HeistConfiguration.VAR_EVENTTREE, new List<int> {0, 0});
+                
+            _cph.SetNextRoll(0); // force success
+
+            runner.ContinueHeist(User1, "!A");
+
+            var expectedEvent = runner.Configuration.Events[0].Events[0].Events[0];
+            
+            Assert.AreEqual(180, _cph.GetUserVariable<int>(User1,runner.Configuration.PointsVariable));
+            Assert.AreEqual(3, _cph.Messages.Count);
+            Assert.AreEqual(expectedEvent.StartMessage, _cph.Messages[0]);
+            Assert.AreEqual(expectedEvent.SuccessMessage, _cph.Messages[1]);
+            Assert.AreEqual((int)HeistStatus.Cooldown, _cph.GetVariable<int>(HeistConfiguration.VAR_STATUS));
+            Assert.AreEqual(null, _cph.GetVariable<Dictionary<string, int>>(HeistConfiguration.VAR_USERS));
+        }
         
-        // [Test]
-        // public void EventCanTrigger()
-        // {
-        //     
-        // }
-        
-        //
-        // [Test]
-        // public void EventCanTrigger()
-        // {
-        //     
-        // }
-        //
-        //
-        //
-        // [Test]
-        // public void HeistDoesntTimeoutWithNoUsers()
-        // {
-        //     
-        // }
+        // TODO: More tests to come
     }
 }
