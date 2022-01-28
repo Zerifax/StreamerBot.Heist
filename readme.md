@@ -1,15 +1,23 @@
-# Setup Instructions
+# Streamer Bot Heist Game
+
+## Features
+
+This was inspired by the firebot heist game but with some additional features
+- Multiple possible heist stories
+- Random events during heists
+- User interaction to resolve events during heists
+- Variable rewards based on what happens in a heist
 
 ## Warning
-This project has a dependency on the interface used for the CPH object in Streamer Bot. As a result it is built against a specific version of streamer bot executable and may need to be rebuilt for newer versions.
+This project has a dependency on the interface used for the CPH object in Streamer Bot. As a result it is built against a specific version of streamer bot executable and may need to be rebuilt for newer versions. This method of loading assemblies into streamer bot is not officially supported.
 
-This method of loading assemblies into streamer bot is not officially supported.
+In order to build this solution you will have to fix the references to the streamer bot assemblies.
 
 ## Building
 
-Build the Zerifax.HookProxy solution and copy the following assemblies into the root of the Streamer Bot folder:
+Build the Zerifax.Proxies project and copy the following assemblies into the root of the Streamer Bot folder:
 
-- Zerifax.HookProxy.dll
+- Zerifax.Proxies.dll
 - Zerifax.Heist.dll
 - Newtonsoft.Json.dll
 
@@ -20,6 +28,8 @@ Build the Zerifax.HookProxy solution and copy the following assemblies into the 
 Copy the exported text below and import it into the Streamer Bot actions.
 
 TlM0RR+LCAAAAAAABADtWltv4kYUfq/U/xDluY58BbtSHwIbCLBLFwi2cVlVc7PxMr7UxhCn6n/vsQ0UbLLStruRst1IBDznzLmO5vtyyJ8//nB1db1lSepH4fXPV9JP5UKIAgZP19fVIyIbEKew8lvxfHX1Z/UGIp8WepS1jLZMmCBjRARVY5qANAkJOjZc2tKldgtpla1y0x8Zy0r7koZk1VCxgFvttqBiagiYUVXAkiGqhoaRa6gn+1iIMGeFx02SsX/WD+HeMz/dXD34AaNX0ywMWXKy2UuiLD5qnQgQ36E8BX0QuoinJ4YTFNIouC3Tb0pJFJIsSVi4acoaJTsr24Wo6/GWKpSlJPHjvfvrmnTNWHzL/S1ruK+CZy6D4AirRVEKuz8vl5YP2e3S5fKdT5IojdzNzfjuYbnsJRDZLkrWy+VWvRFvFFGRjOUySEmUcB/fUM7PI/l39mZ5umHBTTfinFXV+uKWE/asyds4BnuzTcLARHKDo81y6bDEd9HjzfskevTZ8+F8am/Zzc/aOWa7DSRfJDVMo7Dce7r1w3lbcb5h3YiWR4fa4xgHxLMCM0eWs2Jv0nE3NJ+QpYWDXsxJwIOF7WWzvhkTZdJ+M4klIvPMyTvIsYexE/TUt7yTY2UVO/Y7kEewvyMtgsd4kXd2C3soIquXDvrjdGGPnwZ348nsjme4DzYm4ojtxFHX7uTIdla0P/cqP9MZtbTMsQeeLa84ssfiPDQzDDEO3ogeDs0UF3F6a3jxHbWGKbLeNfYe99wWPlIPYht2Lcpp97bYOyx9T9ZDZC28Uc+IHIs/0d5QwoHGiX9rvJ91Mmo9pqNZp13uBV0a9PLBvbOCuqwgRz6/H27Z/dordB2beCbIIV8f980JCQyVzVZv5nde/OveV9ds+hn0NU7zzuB8fSVD7eIF5OaYZX21t93Kx7xvxDicjheWtnJkMx8144lHD2V9hl1bhPfKNwlMkdrDbFDP9WOl606KOu317WMPZSzz9eBuCrXtbIk8j0alXrXn0/3hRnkeTnq0CIwt7nZ6rG9+pPaUj7plD6tz430iRl8r+lrVqLuvZxFrKP5Su9TihJEoiH3+zK1GGUf5bIOS5qVbyitAIorOFGwwgTFdE1RXkgWkICyIhqq6BEua1jJqjnfM91aFUfFGPJds8rgIxih+ziUHTAkzzmthhJQ9FoD6z+pfPz2HBHDNb/wQ7a/5mvctSvwC9sancPF7Nwpd3/u9V9SpVsACzOH+a8BkKU2jLCHsiPQnXngFycUtlZb3E9xWaco2cF+tyjvtI1xO15eKrWENYyYxoeUqSFAZkgSdAp7Luq60mEs0vYU/t9iSLF8udR0ED4UWTwp9+Pihjsf9wkgJhx9OYZxzFKeMnkgr4aFjdbqj6JIELzhOLmaQsNoWkKFoQktm1GiRlitK4ovRnS5n6BXxnFq4pcbrojlfnzn8L9D/DKVq6Nk52iiQm+UV4gNaiiUbmPA9ovPY8W+jC34KVJZwfxcP7vdIOuGAyAOPNhD+iOBWHbFHRb7d9ZE9XMwnMJXB3fn6BURP9z4mgMYZvZNWOOiFkF/UjGd9ZBsFou/zzB17KpFAbdS00i2R+qhP7k2wxz8C09kia+JN+/yJ9I0nZ+bFZT2rPS6q9evAmI7ofN4jH8tGOrgzVccaS9DvEyZR2jvYySbyI4danqP9SQ70fig5DweGEdeB+AsxAFnUFaQwgWiqLKiKYQhIVw1B0YiraTJSXPydAXwpBoChsogQRTAwlgQV6SJ80qkgyoQaEkZtjZJvigFgV6VEYaJAdA1Ol+YywWCaAo8MuWqbqqLSejEGcEvp1Tx9TcOOZsSl0uviAd/MuOPLjCz+C1X6XxCeFxp3TCq9g34XYgVC1RhHHMlLr0FWoonUGRxHEM8QhWKUUcvhApnZ7X10gIho4oPVyxaQ06XxyGh2IFqHsUMR+5DTezPHfqceQ6VbkpTmmIIGRux0O3fQix1WxqdjiudGOAVZbF8kUf3hFss7b2qv+EIxxVMSVcVwjPGEABkZhTNDLXNPglZQY/pk5UM4j9BjLmZm33gAIlSc52gEdYJ6hERKfRL0lJml7ag98e2ZNsfSWIT+wBn29mOhr0iaECA10QGPVFEk8EtuCYgZTBBbMkaSqjIRfzaO/yvS9JJYbqhtICuqKugiMQRVliQBURkDU3QBjpGuY8ZeDssr+H01SF6geCPo/Yn7Dubfv7v4VsH8+/TiG5teHGM8xPZ2Pd7icBpDz/n+DEYHkIazC30e0rd8up0r07w4s0AyoE693FHGeBAOV1TkGeQiNsF+fSQa7uSXr/P9B0ItBROmCKyFRUFVW0gwDMAmgzCpDX+fKi7RXy+QF2+VZoXGn/jPhM8EacwjsvZDr4mMB9h7H/nhJr0+jeTHH/76G9QuyS9IIQAA
+
+You will have to add references to the three assembles listed above for each action.
 
 ### Commands
 
