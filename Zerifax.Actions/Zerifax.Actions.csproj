@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>Actions</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Zerifax.Heist\Zerifax.Heist.csproj" />
+      <ProjectReference Include="..\Zerifax.Proxies\Zerifax.Proxies.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Streamer.bot, Version=0.1.7.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\..\..\..\Apps\Streamer.bot\Streamer.bot.exe</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>

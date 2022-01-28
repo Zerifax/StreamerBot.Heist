@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zerifax.Heist", "Zerifax.Heist\Zerifax.Heist.csproj", "{A01B7047-F74E-4FF2-9616-70840B534B8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zerifax.Heist.Tests", "Zerifax.Heist.Tests\Zerifax.Heist.Tests.csproj", "{733D25EE-17E6-4D38-9253-C290E7A90BA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zerifax.Actions", "Zerifax.Actions\Zerifax.Actions.csproj", "{154DD91C-FC13-4782-9F57-EC8633E638EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zerifax.Proxies", "Zerifax.Proxies\Zerifax.Proxies.csproj", "{8729B6EA-A7A2-40DD-90EC-E8BB4B731731}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{1D45554E-EAE7-4F8C-A031-7F9B423D8B03}"
+ProjectSection(SolutionItems) = preProject
+	readme.md = readme.md
+	example_heist.json = example_heist.json
+	example_heist2.json = example_heist2.json
+EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A01B7047-F74E-4FF2-9616-70840B534B8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A01B7047-F74E-4FF2-9616-70840B534B8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A01B7047-F74E-4FF2-9616-70840B534B8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A01B7047-F74E-4FF2-9616-70840B534B8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{733D25EE-17E6-4D38-9253-C290E7A90BA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{733D25EE-17E6-4D38-9253-C290E7A90BA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{733D25EE-17E6-4D38-9253-C290E7A90BA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{733D25EE-17E6-4D38-9253-C290E7A90BA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{154DD91C-FC13-4782-9F57-EC8633E638EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{154DD91C-FC13-4782-9F57-EC8633E638EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{154DD91C-FC13-4782-9F57-EC8633E638EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{154DD91C-FC13-4782-9F57-EC8633E638EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8729B6EA-A7A2-40DD-90EC-E8BB4B731731}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8729B6EA-A7A2-40DD-90EC-E8BB4B731731}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8729B6EA-A7A2-40DD-90EC-E8BB4B731731}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8729B6EA-A7A2-40DD-90EC-E8BB4B731731}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
