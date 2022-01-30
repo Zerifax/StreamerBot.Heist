@@ -26,6 +26,19 @@ namespace Zerifax.Proxies
                 return default(T);
             }
         }
+        
+        public T GetVariable<T>(string variable, T defaultValue, bool persist = true)
+        {
+            try
+            {
+                return _cph.GetGlobalVar<T>(variable, persist);
+            }
+            catch (Exception ex)
+            {
+                Log($"There was an error getting the variable {variable}: {ex.Message}");
+                return defaultValue;
+            }
+        }
 
         public void SetVariable(string variable, object value, bool persist = true)
         {

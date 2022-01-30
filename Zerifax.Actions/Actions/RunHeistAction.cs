@@ -10,7 +10,7 @@ namespace Zerifax.Actions.RunHeist
     public partial class CPHInline
     {
         private HeistRunner _heistRunner = null;
-        
+	
         public HeistRunner Runner 
         { 
             get 
@@ -32,7 +32,7 @@ namespace Zerifax.Actions.RunHeist
         public bool Execute()
         {
 
-            return _heistRunner.RunHeist();
+            return Runner.RunHeist();
         }
     }
 }

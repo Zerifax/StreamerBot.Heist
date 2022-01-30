@@ -31,7 +31,7 @@
         public bool Execute()
         {
 
-            return Runner.ContinueHeist(args["user"].ToString(), args["rawInput"].ToString());
+            return Runner.EnrolUser(args["user"].ToString(), args["rawInput"].ToString());
         }
     }
 }

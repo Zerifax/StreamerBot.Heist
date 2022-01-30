@@ -5,6 +5,8 @@ namespace Zerifax.Heist
     public interface IVariableProxy
     {
         T GetVariable<T>(string variable, bool persist = true);
+        
+        T GetVariable<T>(string variable, T defaultValue, bool persist = true);
 
         void SetVariable(string variable, object value, bool persist = true);
 

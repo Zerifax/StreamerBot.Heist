@@ -13,6 +13,7 @@ namespace Zerifax.Heist
         public const string VAR_USERS = "heist_users";
         public const string VAR_TIME = "heist_time";
         public const string VAR_EVENTTREE = "heist_event_tree";
+        public const string LAST_EVENT = "heist_event";
         
         public int Cooldown { get; set; }
         public int PrepTime { get; set; }

@@ -24,6 +24,16 @@ namespace Zerifax.Actions
             return (T) _globalVariables[name];
         }
 
+        public T GetVariable<T>(string name, T defaultValue, bool persist = true)
+        {
+            if (!_globalVariables.ContainsKey(name))
+            {
+                return defaultValue;
+            }
+            
+            return (T) _globalVariables[name];
+        }
+
         public void SetVariable(string name, object var, bool persist = true)
         {
             _globalVariables[name] = var;

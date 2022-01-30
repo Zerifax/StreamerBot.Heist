@@ -46,11 +46,12 @@ namespace Zerifax.Heist
         {
             get
             {
-                return (HeistStatus?)_variable.GetVariable<int?>(HeistConfiguration.VAR_STATUS) ?? HeistStatus.Cooldown;
+                return (HeistStatus)_variable.GetVariable<int>(HeistConfiguration.VAR_STATUS, (int)HeistStatus.Cooldown);
             }
             set
             {
                 _variable.SetVariable(HeistConfiguration.VAR_STATUS, (int)value);
+                _variable.SetVariable(HeistConfiguration.LAST_EVENT, value.ToString());
             }
         }
         
