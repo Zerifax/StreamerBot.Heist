@@ -64,11 +64,14 @@ At the root level you will find a list of possible events. For the heist to work
 - SuccessChance (0-100): Determines the chance of success for each user on an individual basis
 - PointsMultiplier (decimal): Invested points by each user will be multiplied by this number to determine winnings if successful
 - EventChance (0-100): This determines the chance that a subevent will be triggered
+- UseEventVoting (true/false): If true the preparation time will be used to allow users to vote instead of the first answer being used. The majority option will be used and in the case of a tie the first of the tied options voted on will be used. 
 
 - StartMessage: Chat message when the heist event starts 
 - SuccessMessage: Chat message when the entire team succeeds
 - PartialSuccessMessage: Chat message when there's a mix of successful and unsuccessful users
 - FailMessage: Chat message when the entire team fails
+- SoloSuccessMessage: Chat message when a single person succeeds on their own (optional)
+- SoloFailMessage: Chat message when a single person fails on their own (optional)
 
 Sub events additionally have these optional properties:
 - Command: The command used to trigger a sub event

@@ -117,10 +117,33 @@ namespace Zerifax.Heist
 
 				if (currentEvent == null)
 				{
+					// should not be possible, fallback scenario
 					ClearHeist();
 					return;
 				}
 
+				var votes = Votes;
+				var voteOrder = VoteOrder;
+				
+				if (Configuration.UseEventVoting && votes.Count > 0)
+				{
+					var selection = votes.OrderByDescending(v => v.Value.Count)
+						.ThenBy(v => voteOrder.IndexOf(v.Key))
+						.FirstOrDefault();
+
+					var voteEvent = currentEvent.Events.FirstOrDefault(se => string.Equals(se.Command, selection.Key));
+					
+					ClearVote();
+
+					if (voteEvent != null)
+					{
+						AppendEvent(currentEvent.Events.IndexOf(voteEvent));
+						RunEvent(voteEvent, selection.Value.FirstOrDefault());
+						return;
+					}
+				}
+				
+				// fallback for no votes
 				var subEvents = currentEvent.Events.Where(se => string.IsNullOrWhiteSpace(se.Command)).ToArray();
 
 				if (subEvents.Length > 0)
@@ -166,12 +189,20 @@ namespace Zerifax.Heist
 
 					if (selectedEvent != null)
 					{
-						AppendEvent(currentEvent.Events.IndexOf(selectedEvent));
-						RunEvent(selectedEvent, user);
+						if (Configuration.UseEventVoting)
+						{
+							Vote(selectedEvent.Command, user);
+						}
+						else
+						{
+							AppendEvent(currentEvent.Events.IndexOf(selectedEvent));
+							RunEvent(selectedEvent, user);							
+						}
 					}
 				}
 				else
 				{
+					// Fallback scenario, should not be possible
 					CompleteEvent(currentEvent);
 				}
 			}
@@ -233,7 +264,14 @@ namespace Zerifax.Heist
 			
 			if (actionEvents?.Length > 0)
 			{
-				SendMessage("What do you do?: " + string.Join(", ", actionEvents.Select(av => $"!{av.Command} ({av.Description})")));
+
+				var message = "What do you do?: " + string.Join(", ", actionEvents.Select(av => $"!{av.Command} ({av.Description})"));
+
+				if (Configuration.UseEventVoting)
+				{
+					message += $" - Voting ends {Configuration.PrepTime} seconds.";
+				}
+				SendMessage(message);
 				return;
 			}
 
@@ -298,13 +336,28 @@ namespace Zerifax.Heist
 			
 			if (successful.Count == 0)
 			{
-				SendMessage(eventToComplete.FailMessage, Args.ForUser(user));
+				if (failed.Count == 1 && !string.IsNullOrWhiteSpace(eventToComplete.SoloFailMessage))
+				{
+					SendMessage(eventToComplete.SoloFailMessage, Args.ForUser(user));
+				}
+				else
+				{
+					SendMessage(eventToComplete.FailMessage, Args.ForUser(user));					
+				}
 				return;
 			}
 
 			if (failed.Count == 0)
 			{
-				SendMessage(eventToComplete.SuccessMessage, Args.ForUser(user));
+				if (successful.Count == 1 && !string.IsNullOrWhiteSpace(eventToComplete.SoloSuccessMessage))
+				{
+					SendMessage(eventToComplete.SoloSuccessMessage, Args.ForUser(user));					
+				}
+				else
+				{
+					SendMessage(eventToComplete.SuccessMessage, Args.ForUser(user));
+				}
+				
 			}
 			else
 			{
@@ -319,8 +372,5 @@ namespace Zerifax.Heist
 			
 			SendMessage($"Winnings: {result}");
 		}
-        
     }
-
-    
 }

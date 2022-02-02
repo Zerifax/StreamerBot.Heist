@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security;
 using System.Text;
 using Newtonsoft.Json;
@@ -39,6 +40,30 @@ namespace Zerifax.Heist
                 }
 
                 return _configuration;
+            }
+        }
+        
+        protected Dictionary<string, List<string>> Votes
+        {
+            get
+            {
+                return _variable.GetVariable<Dictionary<string, List<string>>>(HeistConfiguration.VAR_VOTES) ?? new Dictionary<string, List<string>>();
+            }
+            private set
+            {
+                _variable.SetVariable(HeistConfiguration.VAR_VOTES, value);
+            }
+        }
+        
+        protected List<string> VoteOrder
+        {
+            get
+            {
+                return _variable.GetVariable<List<string>>(HeistConfiguration.VAR_VOTE_ORDER) ?? new List<string>();
+            }
+            private set
+            {
+                _variable.SetVariable(HeistConfiguration.VAR_VOTE_ORDER, value);
             }
         }
 
@@ -188,6 +213,42 @@ namespace Zerifax.Heist
         protected int Roll(int min, int max)
         {
             return _variable.Roll(min, max);
+        }
+
+        protected void Vote(string option, string user)
+        {
+            var votes = Votes;
+            List<string> users = null;
+
+            if (votes.Any(v => v.Value.Contains(user, StringComparer.CurrentCultureIgnoreCase)))
+            {
+                return; // no double voting
+            }
+
+            if (votes.ContainsKey(option))
+            {
+                users = votes[option];
+                
+                if (!users.Contains(user))
+                {
+                    users.Add(user);
+                }
+            } else {
+                users = new List<string>() { user };
+                votes.Add(option, users);
+
+                var order = VoteOrder;
+                order.Add(option);
+                VoteOrder = order;
+            }
+            
+            Votes = votes;
+        }
+
+        protected void ClearVote()
+        {
+            Votes = null;
+            VoteOrder = null;
         }
     }
 }

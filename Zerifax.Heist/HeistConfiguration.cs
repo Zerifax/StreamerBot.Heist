@@ -14,10 +14,11 @@ namespace Zerifax.Heist
         public const string VAR_TIME = "heist_time";
         public const string VAR_EVENTTREE = "heist_event_tree";
         public const string LAST_EVENT = "heist_event";
+        public const string VAR_VOTES = "heist_votes";
+        public const string VAR_VOTE_ORDER = "heist_voteorder";
         
         public int Cooldown { get; set; }
         public int PrepTime { get; set; }
-        
         public int MinUsers { get; set; }
         
         public string CreateTeamMessage { get; set; }
@@ -26,16 +27,14 @@ namespace Zerifax.Heist
         public string CooldownMessage { get; set; }
         
         public string ReadyMessage { get; set; }
-
         public int MinPoints { get; set; }
         public int MaxPoints { get; set; }
-        
         public int MessageWait { get; set; }
         
-        
+        public bool UseEventVoting { get; set; }
+
         public string PointsNameVariable = "pointsname";
         public string PointsVariable = "points";
-        
         
         public List<Event> Events { get; set; }
     }
@@ -47,6 +46,8 @@ namespace Zerifax.Heist
         public string SuccessMessage { get; set; }
         public string PartialSuccessMessage { get; set; }
         public string FailMessage { get; set; }
+        public string SoloSuccessMessage { get; set; }
+        public string SoloFailMessage { get; set; }
         
         public int SuccessChance { get; set; }
         public double PointsMultiplier { get; set; } // calculated as (1+BonusPoints) * investment

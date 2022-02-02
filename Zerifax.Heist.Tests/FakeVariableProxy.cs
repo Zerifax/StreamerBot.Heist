@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using NUnit.Framework;
 using Zerifax.Heist;
 
 namespace Zerifax.Actions
@@ -81,7 +82,14 @@ namespace Zerifax.Actions
 
         public int Roll(int min, int max)
         {
-            return _nextRoll.Dequeue();
+            try
+            {
+                return _nextRoll.Dequeue();
+            }
+            catch (InvalidOperationException)
+            {
+                throw new InconclusiveException("Invalid roll queue. Not enough items provided for test to execute.");
+            }
         }
 
         public void SetNextRoll(params int[] value)
