@@ -106,12 +106,12 @@ namespace Zerifax.Heist
         }
 
 		// This assumes event is in progress with some user options
-		private void ContinueHeist()
+		private void ContinueHeist(bool ignorePrepTime = false)
 		{
 			var lastRun = LastRun;
 			var prepTime = TimeSpan.FromSeconds(Configuration.PrepTime);
 
-			if (DateTime.Now.Subtract(prepTime) > lastRun)
+			if (DateTime.Now.Subtract(prepTime) > lastRun || ignorePrepTime)
 			{
 				var currentEvent = CurrentEvent;
 
@@ -162,9 +162,11 @@ namespace Zerifax.Heist
 
 		public bool ContinueHeist(string user, string command)
 		{
+			var users = Users; 
+			
 			if (Status == HeistStatus.InProgress)
 			{
-				if (!Users.ContainsKey(user))
+				if (!users.ContainsKey(user))
 				{
 					return true; // user not in heist
 				}
@@ -191,7 +193,11 @@ namespace Zerifax.Heist
 					{
 						if (Configuration.UseEventVoting)
 						{
-							Vote(selectedEvent.Command, user);
+							var voteCount = Vote(selectedEvent.Command, user);
+							if (voteCount >= users.Count)
+							{
+								ContinueHeist(true);
+							}
 						}
 						else
 						{

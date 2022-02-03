@@ -215,14 +215,16 @@ namespace Zerifax.Heist
             return _variable.Roll(min, max);
         }
 
-        protected void Vote(string option, string user)
+        protected int Vote(string option, string user)
         {
             var votes = Votes;
             List<string> users = null;
+            
+            var voteCount = votes.Values.Sum(v => v.Count);
 
             if (votes.Any(v => v.Value.Contains(user, StringComparer.CurrentCultureIgnoreCase)))
             {
-                return; // no double voting
+                return voteCount; // no double voting
             }
 
             if (votes.ContainsKey(option))
@@ -232,10 +234,12 @@ namespace Zerifax.Heist
                 if (!users.Contains(user))
                 {
                     users.Add(user);
+                    voteCount++;
                 }
             } else {
                 users = new List<string>() { user };
                 votes.Add(option, users);
+                voteCount++;
 
                 var order = VoteOrder;
                 order.Add(option);
@@ -243,6 +247,8 @@ namespace Zerifax.Heist
             }
             
             Votes = votes;
+
+            return voteCount;
         }
 
         protected void ClearVote()

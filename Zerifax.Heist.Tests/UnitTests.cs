@@ -13,6 +13,7 @@ namespace Zerifax.Heist.Tests
         private const string User3 = "user3";
         private const string User4 = "user4";
         private const string User5 = "user5";
+        private const string User99 = "user99";
         
         [SetUp]
         public void Setup()
@@ -307,15 +308,16 @@ namespace Zerifax.Heist.Tests
             _cph.SetVariable(HeistConfiguration.VAR_STATUS, (int)HeistStatus.InProgress);
             _cph.SetVariable(HeistConfiguration.VAR_TIME, DateTime.Now.Subtract(TimeSpan.FromSeconds(10)));
 
-            _cph.SetVariable(HeistConfiguration.VAR_USERS, new Dictionary<string, int>() {{User1, 100}, {User2, 100}, {User3, 100}, {User4, 100}});
+            _cph.SetVariable(HeistConfiguration.VAR_USERS, new Dictionary<string, int>() {{User1, 100}, {User2, 100}, {User3, 100}, {User4, 100}, {User99, 100}});
             _cph.SetVariable(HeistConfiguration.VAR_EVENTTREE, new List<int> {0, 0});
                 
-            _cph.SetNextRoll(0,0,0,0); // force success
+            _cph.SetNextRoll(0,0,0,0,0); // force success
 
             runner.ContinueHeist(User1, "!A");
             runner.ContinueHeist(User2, "!C");
             runner.ContinueHeist(User3, "!B");
             runner.ContinueHeist(User4, "!B");
+            // user 99 doesn't vote
 
             runner.RunHeist();
 
@@ -338,22 +340,49 @@ namespace Zerifax.Heist.Tests
             _cph.SetVariable(HeistConfiguration.VAR_STATUS, (int)HeistStatus.InProgress);
             _cph.SetVariable(HeistConfiguration.VAR_TIME, DateTime.Now.Subtract(TimeSpan.FromSeconds(10)));
 
-            _cph.SetVariable(HeistConfiguration.VAR_USERS, new Dictionary<string, int>() {{User1, 100}, {User2, 100}, {User3, 100}, {User4, 100}, {User5, 100}});
+            _cph.SetVariable(HeistConfiguration.VAR_USERS, new Dictionary<string, int>() {{User1, 100}, {User2, 100}, {User3, 100}, {User4, 100}, {User5, 100}, {User99, 100}});
             _cph.SetVariable(HeistConfiguration.VAR_EVENTTREE, new List<int> {0, 0});
                 
-            _cph.SetNextRoll(0,0,0,0,0); // force success
+            _cph.SetNextRoll(0,0,0,0,0,0); // force success
 
             runner.ContinueHeist(User1, "!A");
             runner.ContinueHeist(User2, "!C");
             runner.ContinueHeist(User3, "!B");
             runner.ContinueHeist(User4, "!B");
             runner.ContinueHeist(User5, "!C");
+            // user 99 doesn't vote
 
             runner.RunHeist();
 
             var expectedEvent = runner.Configuration.Events[0].Events[0].Events[2]; // second event (B)
             
             Assert.AreEqual(150, _cph.GetUserVariable<int>(User1,runner.Configuration.PointsVariable));
+            Assert.AreEqual(3, _cph.Messages.Count);
+            Assert.AreEqual(expectedEvent.StartMessage, _cph.Messages[0]);
+            Assert.AreEqual(expectedEvent.SuccessMessage, _cph.Messages[1]);
+            Assert.AreEqual((int)HeistStatus.Cooldown, _cph.GetVariable<int>(HeistConfiguration.VAR_STATUS));
+            Assert.AreEqual(null, _cph.GetVariable<Dictionary<string, int>>(HeistConfiguration.VAR_USERS));
+        }
+        
+        [Test]
+        public void HeistContinuesWhenAllUsersVote()
+        {
+            _cph.SetVariable(HeistConfiguration.VAR_ConfigFile, $"Heists\\voting.json");
+            
+            var runner = new HeistRunner(_cph, new PointManager(_cph));
+            _cph.SetVariable(HeistConfiguration.VAR_STATUS, (int)HeistStatus.InProgress);
+            _cph.SetVariable(HeistConfiguration.VAR_TIME, DateTime.Now.Subtract(TimeSpan.FromSeconds(10)));
+
+            _cph.SetVariable(HeistConfiguration.VAR_USERS, new Dictionary<string, int>() {{User1, 100}});
+            _cph.SetVariable(HeistConfiguration.VAR_EVENTTREE, new List<int> {0, 0});
+                
+            _cph.SetNextRoll(0); // force success
+
+            runner.ContinueHeist(User1, "!A");
+
+            var expectedEvent = runner.Configuration.Events[0].Events[0].Events[0];
+            
+            Assert.AreEqual(180, _cph.GetUserVariable<int>(User1,runner.Configuration.PointsVariable));
             Assert.AreEqual(3, _cph.Messages.Count);
             Assert.AreEqual(expectedEvent.StartMessage, _cph.Messages[0]);
             Assert.AreEqual(expectedEvent.SuccessMessage, _cph.Messages[1]);
